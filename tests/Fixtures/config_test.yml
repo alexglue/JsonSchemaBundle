@@ -1,0 +1,13 @@
+framework:
+    secret: 'test'
+    validation: { enable_annotations: true }
+
+doctrine:
+    dbal:
+        driver:                        'pdo_sqlite'
+        path:                          '%kernel.cache_dir%/db.sqlite'
+        charset:                       'UTF8'
+
+    orm:
+        auto_generate_proxy_classes:   '%kernel.debug%'
+        auto_mapping:                  true

@@ -1,25 +1,22 @@
 language: php
-
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-
-env:
-  - SYMFONY_VERSION=2.3
-  - SYMFONY_VERSION=2.4
-  - SYMFONY_VERSION=2.5
-  - SYMFONY_VERSION=2.6
-  - SYMFONY_VERSION=dev-master
-
-before_script:
-  - composer require symfony/symfony:${SYMFONY_VERSION}
-
-script: phpunit --coverage-text
-
-notifications:
-  email: "a.volochnev@gmail.com"
+sudo: false
+cache:
+    directories:
+        - $HOME/.composer/cache
 
 matrix:
-  allow_failures:
-    - env: SYMFONY_VERSION=dev-master
+    fast_finish: true
+    include: 
+        - php: 7.0
+        - php: hhvm
+    allow_failures:
+        - php: hhvm
+
+before_script:
+    - composer self-update
+
+install:
+    - composer update --no-interaction --prefer-dist
+
+script: 
+    - vendor/bin/phpunit

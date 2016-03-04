@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Specific",
+    "description": "A schema loaded from a relative path",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier",
+            "type": ["integer", "null"]
+        },
+        "name": {
+            "type": "string",
+            "minLength": 1
+        },
+				"enum": {
+          "type": "string",
+          "enum": ["foo", "bar"]
+        }
+    },
+    "required": ["name"]
+}
+
+

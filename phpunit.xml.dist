@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
-<phpunit bootstrap="Tests/bootstrap.php" backupGlobals="false">
+<phpunit bootstrap="tests/bootstrap.php" backupGlobals="false">
 
     <testsuites>
         <testsuite name="JsonSchemaBundle">
-            <directory suffix="Test.php">Tests/</directory>
+            <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>
 
