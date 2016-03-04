@@ -1,0 +1,4 @@
+services:
+    json_schema.doctrine_strategy:
+        class: Soyuka\JsonSchemaBundle\Strategy\DoctrineMetadataStrategy
+        arguments: ['@doctrine']

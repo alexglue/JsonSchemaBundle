@@ -1,25 +1,45 @@
 {
-    "name": "hadesarchitect/json-schema-bundle",
+    "name": "soyuka/json-schema-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony2 bundle for Justin Rainbow's json-schema library.",
+    "description": "Symfony2 tools bundle for Justin Rainbow's json-schema library.",
     "license": "MIT",
     "authors": [
         {
             "name": "Aleksander Volochnev",
             "email": "a.volochnev@gmail.com"
+        },
+        {
+            "name": "Antoine Bluchet",
+            "email": "soyuka@gmail.com"
         }
     ],
     "require": {
         "justinrainbow/json-schema": "<2",
-        "symfony/framework-bundle": "~2.3"
+        "symfony/framework-bundle": "~2.3",
+        "symfony/validator": "^3.0",
+        "symfony/property-access": "^3.0",
+        "symfony/finder": "^3.0",
+        "dunglas/php-to-json-schema": "dev-master",
+        "symfony/property-info": "^3.0",
+        "symfony/console": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7"
+        "phpunit/phpunit": "~3.7",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6"
     },
-    "autoload" : {
-        "psr-0" : {
-            "HadesArchitect\\JsonSchemaBundle" : ""
+    "suggest": {
+      "doctrine/orm": "To convert Doctrine entities to json schema's based on metadata"
+    },
+    "autoload": {
+        "psr-4": {
+            "Soyuka\\JsonSchemaBundle\\" : "src/"
         }
     },
-    "target-dir" : "HadesArchitect/JsonSchemaBundle"
+    "autoload-dev": {
+        "psr-4": {
+          "Soyuka\\JsonSchemaBundle\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev"
 }
