@@ -7,7 +7,7 @@ use ReflectionClass;
 
 /**
  * DoctrineMetadataStrategy generates a json schema from a Doctrine entity
- * it reads annotations
+ * it reads annotations.
  */
 class DoctrineMetadataStrategy implements StrategyInterface
 {

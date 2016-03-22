@@ -13,7 +13,7 @@ class GenerateJsonSchemaCommand extends ContainerAwareCommand
     private $strategies = ['php', 'doctrine'];
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -49,7 +49,7 @@ EOF
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

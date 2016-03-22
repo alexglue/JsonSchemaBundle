@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Soyuka\JsonSchemaBundle\Tests\Error;
+namespace Soyuka\JsonSchemaBundle\tests\Error;
 
 use Soyuka\JsonSchemaBundle\Error\Error;
 

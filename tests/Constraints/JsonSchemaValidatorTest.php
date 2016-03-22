@@ -1,6 +1,6 @@
 <?php
 
-namespace Soyuka\JsonSchemaBundle\Tests\Constraints;
+namespace Soyuka\JsonSchemaBundle\tests\Constraints;
 
 use Soyuka\JsonSchemaBundle\Tests\Fixtures\DefaultJsonSchema;
 use Soyuka\JsonSchemaBundle\Tests\Fixtures\SpecificJsonSchema;

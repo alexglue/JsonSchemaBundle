@@ -7,7 +7,7 @@ use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
 /**
  * DoctrineMetadataStrategy generates a json schema from php files
- * it uses dunglas/php-to-json-schema
+ * it uses dunglas/php-to-json-schema.
  */
 class PhpStrategy implements StrategyInterface
 {

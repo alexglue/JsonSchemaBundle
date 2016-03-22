@@ -1,6 +1,6 @@
 <?php
 
-namespace Soyuka\JsonSchemaBundle\Tests\Mapping\Validator;
+namespace Soyuka\JsonSchemaBundle\tests\Mapping\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {

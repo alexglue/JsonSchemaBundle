@@ -1,6 +1,6 @@
 <?php
 
-namespace Soyuka\JsonSchemaBundle\Tests\Strategy;
+namespace Soyuka\JsonSchemaBundle\tests\Strategy;
 
 use Soyuka\JsonSchemaBundle\Tests\KernelTrait;
 use Soyuka\JsonSchemaBundle\Strategy\DoctrineMetadataStrategy;
