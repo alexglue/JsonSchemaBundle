@@ -5,7 +5,7 @@ namespace Soyuka\JsonSchemaBundle\Tests\Fixtures\TestBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Soyuka\JsonSchemaBundle\Tests\Fixtures\TestBundle\Entity\ProductRepository")
  */
 class Product
 {

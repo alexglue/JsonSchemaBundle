@@ -77,7 +77,7 @@ EOF
             $output->writeln(sprintf('<info>Processing bundle %s</info>', $bundle->getName()));
 
             $finder = new Finder();
-            $finder->files()->name('*.php')->in($dir);
+            $finder->files()->name('*.php')->notName('*Repository.php')->in($dir);
 
             $prefix = $bundle->getNameSpace().'\\'.strtr($inside, '/', '\\');
 
