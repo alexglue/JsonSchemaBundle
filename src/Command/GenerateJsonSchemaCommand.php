@@ -84,10 +84,6 @@ EOF
             foreach ($finder as $file) {
                 $ns = $prefix;
 
-                if ($relativePath = $file->getRelativePath()) {
-                    $ns .= '\\'.strtr($relativePath, '/', '\\');
-                }
-
                 $title = $file->getBasename('.php');
                 $class = $ns.'\\'.$title;
 

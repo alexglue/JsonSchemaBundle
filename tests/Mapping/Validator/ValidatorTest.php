@@ -2,6 +2,8 @@
 
 namespace Soyuka\JsonSchemaBundle\tests\Mapping\Validator;
 
+use Soyuka\JsonSchemaBundle\Exception\ViolationException;
+
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -72,18 +74,21 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckFail()
     {
-        $this->setExpectedException('Soyuka\JsonSchemaBundle\Exception\ViolationException');
-
         $invalidObject = new \stdClass();
         $invalidObject->name = 'test-name';
 
-        $this->validator->check($invalidObject, $this->schema);
+        try {
+            $this->validator->check($invalidObject, $this->schema);
+        } catch(ViolationException $e) {
+            $this->assertNotEmpty($e->getErrors());
+        }
+
         $this->assertNotEmpty($this->validator->getErrors());
 
         $errors = $this->validator->getErrors();
 
-        $this->assertEquals('the property id is required', $errors[0]->getViolation());
-        $this->assertEquals('the property id is required', "{$errors[0]}");
+        $this->assertEquals('The property id is required', $errors[0]->getViolation());
+        $this->assertEquals('id: The property id is required (required)', "{$errors[0]}");
 
         $invalidObject->id = 42;
 
