@@ -12,7 +12,7 @@ class JsonSchemaValidator extends ConstraintValidator
     private $validator;
     private $uriRetrieverService;
     private $jsonSchemasPath;
-    private $cache = [];
+    private $cache = null;
 
     public function __construct(ValidatorService $validator, UriRetrieverService $uriRetrieverService, $jsonSchemasPath)
     {
@@ -22,30 +22,41 @@ class JsonSchemaValidator extends ConstraintValidator
     }
 
     /**
+     * Get schema file path for a given class
+     * @param mixed $class
+     * @TODO implement cache
+     * @return string
+     */
+    public function getSchemaForClass($class): string
+    {
+        // $cacheName = is_string($class) ? $class : get_class($class);
+
+        // if (isset($this->cache[$cacheName])) {
+        //     return $this->cache[$cacheName];
+        // }
+
+        $refl = new \ReflectionClass($class);
+        $directory = explode('\\', $refl->getName());
+        $name = array_pop($directory);
+        $schema = sprintf(
+            'file://%s/%s/%s.json',
+            $this->jsonSchemasPath,
+            implode('', [$directory[0], $directory[1]]),
+            $name
+        );
+
+        return $schema;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function validate($class, Constraint $constraint)
     {
         $schema = $constraint->schema;
 
-        $name = is_string($class) ? $class : get_class($class);
-
         if ($schema === null) {
-            if (!isset($this->cache[$name])) {
-                $refl = new \ReflectionClass($class);
-                $directory = explode('\\', $refl->getName());
-                $name = array_pop($directory);
-                $schema = sprintf(
-                    'file://%s/%s/%s.json',
-                    $this->jsonSchemasPath,
-                    implode('', [$directory[0], $directory[1]]),
-                    $name
-                );
-
-                $this->cache[$name] = $schema;
-            } else {
-                $schema = $this->cache[$name];
-            }
+            $schema = $this->getSchemaForClass($class);
         }
 
         $baseUri = sprintf('file://%s', $this->jsonSchemasPath);
@@ -57,8 +68,11 @@ class JsonSchemaValidator extends ConstraintValidator
         if (!$valid) {
             foreach ($this->validator->getErrors() as $error) {
                 $this->context
-                    ->buildViolation($error->getViolation())
+                    ->buildViolation((string) $error)
                     ->atPath($error->getProperty())
+                    ->setCode($error->getConstraint())
+                    ->setCause($error->getViolation())
+                    ->setTranslationDomain('JsonSchema')
                     ->addViolation();
             }
         }

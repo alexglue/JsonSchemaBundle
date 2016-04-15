@@ -24,7 +24,7 @@ class GenerateJsonSchemaCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * @after
      */
-    private function rmFixture()
+    protected function rmFixture()
     {
         if (!file_exists($this->fixture)) {
             return;
@@ -116,6 +116,17 @@ class GenerateJsonSchemaCommandTest extends \PHPUnit_Framework_TestCase
         $command = $this->getCommand();
 
         $command->execute(['--strategy' => 'doctrine', '-d' => 'Directory']);
+    }
+
+    public function testExecuteInvalidStrategy()
+    {
+        $command = $this->getCommand();
+        $exitCode = $command->execute(['--strategy' => 'nonexistant', '-d' => 'Directory']);
+
+        $d = explode(PHP_EOL, $command->getDisplay());
+
+        $this->assertEquals($exitCode, 1);
+        $this->assertEquals($d[0], 'Strategy must be one of: php, doctrine');
     }
 
     public function testMerge()

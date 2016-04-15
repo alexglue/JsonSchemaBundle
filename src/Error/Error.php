@@ -4,29 +4,19 @@ namespace Soyuka\JsonSchemaBundle\Error;
 
 class Error implements ErrorInterface
 {
-    /**
-     * @var string
-     */
     protected $property;
-
-    /**
-     * @var string
-     */
     protected $violation;
-
-    /**
-     * @var string
-     */
-    protected $stringed;
+    protected $constraint;
 
     /**
      * @param string $property
      * @param string $violation
      */
-    public function __construct($property, $violation = 'unknown violation')
+    public function __construct($property, $violation, $constraint)
     {
         $this->property = $property;
         $this->violation = $violation;
+        $this->constraint = $constraint;
     }
 
     /**
@@ -45,16 +35,16 @@ class Error implements ErrorInterface
         return $this->violation;
     }
 
+    public function getConstraint()
+    {
+        return $this->constraint;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function __toString()
     {
-        if (!$this->stringed) {
-            $this->stringed = $this->property ? $this->property.': ' : '';
-            $this->stringed .= ucfirst($this->violation);
-        }
-
-        return $this->stringed;
+        return sprintf('%s: %s (%s)', $this->property, $this->violation, $this->constraint);
     }
 }
