@@ -17,5 +17,10 @@ interface ErrorInterface
     /**
      * @return string
      */
+    public function getConstraint();
+
+    /**
+     * @return string
+     */
     public function __toString();
 }

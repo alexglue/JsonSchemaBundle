@@ -24,7 +24,7 @@ class GenerateJsonSchemaCommandTest extends \PHPUnit_Framework_TestCase
     /**
      * @after
      */
-    private function rmFixture()
+    protected function rmFixture()
     {
         if (!file_exists($this->fixture)) {
             return;

@@ -59,7 +59,7 @@ class ValidatorService implements ValidatorServiceInterface
         $this->errors = array();
 
         foreach ($this->validator->getErrors() as $error) {
-            $this->errors[] = new Error($error['property'], $error['message']);
+            $this->errors[] = new Error($error['property'], $error['message'], $error['constraint']);
         }
     }
 
