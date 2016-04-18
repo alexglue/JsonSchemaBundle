@@ -2,6 +2,7 @@
 
 namespace Soyuka\JsonSchemaBundle\Constraints;
 
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Soyuka\JsonSchemaBundle\Mapping\Validator\ValidatorService;
@@ -11,17 +12,20 @@ use Psr\Cache\CacheException;
 
 final class JsonSchemaValidator extends ConstraintValidator
 {
+    const CACHE_KEY_PREFIX = 'json_schema_validator_';
+
     private $validator;
     private $uriRetrieverService;
     private $jsonSchemasPath;
     private $cache = null;
-    const CACHE_KEY_PREFIX = 'json_schema_validator_';
+    private $accessor;
 
     public function __construct(ValidatorService $validator, UriRetrieverService $uriRetrieverService, $jsonSchemasPath)
     {
         $this->validator = $validator;
         $this->uriRetrieverService = $uriRetrieverService;
         $this->jsonSchemasPath = $jsonSchemasPath;
+        $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
     public function setCache(CacheItemPoolInterface $cacheItemPool) {
@@ -66,6 +70,14 @@ final class JsonSchemaValidator extends ConstraintValidator
         return $schema;
     }
 
+    private function propertyToString($v): string {
+        if (is_array($v)) {
+            return implode(', ', $v);
+        }
+
+        return (string) $v;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -85,12 +97,21 @@ final class JsonSchemaValidator extends ConstraintValidator
 
         if (!$valid) {
             foreach ($this->validator->getErrors() as $error) {
+                $parameters = [
+                    'expected' => $schema->properties->{$error->getProperty()}->{$error->getConstraint()},
+                    'invalid' => $this->accessor->getValue($class, $error->getProperty()),
+                ];
+
                 $this->context
-                    ->buildViolation((string) $error)
+                    ->buildViolation($error->getConstraint())
                     ->atPath($error->getProperty())
                     ->setCode($error->getConstraint())
                     ->setCause($error->getViolation())
-                    ->setTranslationDomain('JsonSchema')
+                    ->setInvalidValue($parameters['invalid'])
+                    ->setParameter('%expected%', $this->propertyToString($parameters['expected']))
+                    ->setParameter('%invalid%', $this->propertyToString($parameters['invalid']))
+                    ->setParameter('%property%', $error->getProperty())
+                    ->setTranslationDomain('JsonSchemaViolations')
                     ->addViolation();
             }
         }

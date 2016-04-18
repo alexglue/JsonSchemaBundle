@@ -105,6 +105,28 @@ The schema option value is retrieved using the `JsonSchema\Uri\UriRetriever` (an
 ```yaml
 json_schema:
     path: 'foobar'
+    cache: 'some_psr_cache_service' #cache schema's
+```
+
+## Translations
+
+Translation domain is `JsonSchemaViolations`, therefore default translations would be located in:
+
+```
+%kernel.root_dir%/Resources/translations/JsonSchemaViolations.{lang}.{format}
+```
+
+Every translation will be given following string parameters:
+
+- `%property%`: the property path
+- `%expected%`: the expected value
+- `%invalid%`: the current invalid value
+
+Keys are the constraint code, for example with `minLength`:
+
+```xml
+<source>minLength</source>
+<target>%property% is not long enough, expected %expected% got "%invalid%"</target>
 ```
 
 ## Hack

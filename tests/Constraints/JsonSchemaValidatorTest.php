@@ -71,6 +71,16 @@ class JsonSchemaValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($errors));
     }
 
+    public function testTranslated()
+    {
+        $entity = new DefaultJsonSchema();
+        $entity->setName('o');
+        $errors = $this->validator->validate($entity);
+
+        $this->assertEquals($errors->get(0)->getMessage(), 'name is not long enough, expected 2 got "o"');
+        $this->assertEquals(1, count($errors));
+    }
+
     /**
      * @expectedException JsonSchema\Exception\UriResolverException
      */

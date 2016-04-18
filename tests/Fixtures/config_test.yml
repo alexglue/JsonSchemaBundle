@@ -1,6 +1,11 @@
 framework:
     secret: 'test'
     validation: { enable_annotations: true }
+    translator:
+        enabled: true
+        fallback: 'en'
+        paths:
+            - '%kernel.root_dir%/Resources/translations'
 
 doctrine:
     dbal:
