@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 
 class JsonSchemaExtension extends Extension
 {
@@ -39,6 +40,15 @@ class JsonSchemaExtension extends Extension
 
         if (class_exists('Doctrine\ORM\Version')) {
             $loader->load('doctrine.yml');
+        }
+
+        if(class_exists('Symfony\Component\Cache\Adapter\ArrayAdapter')) {
+            $loader->load('cache.yml');
+        }
+
+        if(isset($config['cache'])) {
+            $validatorDefinition = $container->getDefinition('json_schema.validator_constraint');
+            $validatorDefinition->addMethodCall('setCache', [new Reference($config['cache'])]);
         }
     }
 }

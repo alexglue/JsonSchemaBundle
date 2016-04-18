@@ -6,13 +6,16 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Soyuka\JsonSchemaBundle\Mapping\Validator\ValidatorService;
 use Soyuka\JsonSchemaBundle\Mapping\Uri\UriRetrieverService;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\CacheException;
 
-class JsonSchemaValidator extends ConstraintValidator
+final class JsonSchemaValidator extends ConstraintValidator
 {
     private $validator;
     private $uriRetrieverService;
     private $jsonSchemasPath;
     private $cache = null;
+    const CACHE_KEY_PREFIX = 'json_schema_validator_';
 
     public function __construct(ValidatorService $validator, UriRetrieverService $uriRetrieverService, $jsonSchemasPath)
     {
@@ -21,19 +24,27 @@ class JsonSchemaValidator extends ConstraintValidator
         $this->jsonSchemasPath = $jsonSchemasPath;
     }
 
+    public function setCache(CacheItemPoolInterface $cacheItemPool) {
+        $this->cache = $cacheItemPool;
+    }
+
     /**
      * Get schema file path for a given class
      * @param mixed $class
-     * @TODO implement cache
      * @return string
      */
-    public function getSchemaForClass($class): string
+    private function getSchemaForClass($class): string
     {
-        // $cacheName = is_string($class) ? $class : get_class($class);
+        $cacheKey = self::CACHE_KEY_PREFIX . (is_string($class) ? $class : get_class($class));
 
-        // if (isset($this->cache[$cacheName])) {
-        //     return $this->cache[$cacheName];
-        // }
+        if (null !== $this->cache) {
+            try {
+                $cacheItem = $this->cache->getItem($cacheKey);
+                if ($cacheItem->isHit()) {
+                    return $cacheItem->get();
+                }
+            } catch(CacheException $e) {}
+        }
 
         $refl = new \ReflectionClass($class);
         $directory = explode('\\', $refl->getName());
@@ -44,6 +55,13 @@ class JsonSchemaValidator extends ConstraintValidator
             implode('', [$directory[0], $directory[1]]),
             $name
         );
+
+        if (isset($cacheItem)) {
+            try {
+                $cacheItem->set($schema);
+                $this->cache->save($cacheItem);
+            } catch(CacheException $e) {}
+        }
 
         return $schema;
     }

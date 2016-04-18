@@ -1,0 +1,7 @@
+services:
+    json_schema.cache.array:
+        class: 'Symfony\Component\Cache\Adapter\ArrayAdapter'
+        arguments: [0, false]
+    json_schema.cache.apcu:
+        class: 'Symfony\Component\Cache\Adapter\ApcuAdapter'
+        arguments: [0, false]

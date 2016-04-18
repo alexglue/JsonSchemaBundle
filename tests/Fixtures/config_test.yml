@@ -11,3 +11,5 @@ doctrine:
     orm:
         auto_generate_proxy_classes:   '%kernel.debug%'
         auto_mapping:                  true
+json_schema:
+    cache: 'json_schema.cache.array'

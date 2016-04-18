@@ -29,7 +29,6 @@ class PropertyAccessorConstraint extends ObjectConstraint
     protected function getProperty($element, $property, $fallback = null)
     {
         if (is_array($element) /*$this->checkMode == self::CHECK_MODE_TYPE_CAST*/) {
-            die('test');
             return array_key_exists($property, $element) ? $element[$property] : $fallback;
         } elseif (is_object($element)) {
             return $this->accessor->isReadable($element, $property) ? $this->accessor->getValue($element, $property) : $fallback;

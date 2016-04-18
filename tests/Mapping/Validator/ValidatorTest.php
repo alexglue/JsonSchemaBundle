@@ -79,7 +79,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->validator->check($invalidObject, $this->schema);
-        } catch(ViolationException $e) {
+        } catch (ViolationException $e) {
             $this->assertNotEmpty($e->getErrors());
         }
 

@@ -21,6 +21,9 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('%kernel.root_dir%/Resources/validators')
                     ->info('The directory that contains entity json schemas')
                 ->end()
+                ->scalarNode('cache')
+                    ->info('Cache service')
+                ->end()
             ->end();
 
         return $treeBuilder;

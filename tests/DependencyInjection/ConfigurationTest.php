@@ -20,4 +20,16 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TreeBuilder::class, $treeBuilder);
         $this->assertEquals(['path' => 'test'], $config);
     }
+
+    public function testFullConfig()
+    {
+        $configuration = new Configuration();
+        $treeBuilder = $configuration->getConfigTreeBuilder();
+        $processor = new Processor();
+        $config = $processor->processConfiguration($configuration, ['json_schema' => ['path' => 'test', 'cache' => 'json_schema.cache.array']]);
+
+        $this->assertInstanceOf(ConfigurationInterface::class, $configuration);
+        $this->assertInstanceOf(TreeBuilder::class, $treeBuilder);
+        $this->assertEquals(['path' => 'test', 'cache' => 'json_schema.cache.array'], $config);
+    }
 }
