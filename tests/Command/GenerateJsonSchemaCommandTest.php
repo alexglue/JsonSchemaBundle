@@ -135,6 +135,7 @@ class GenerateJsonSchemaCommandTest extends \PHPUnit_Framework_TestCase
         $command->execute(['--strategy' => 'doctrine']);
 
         $path = $this->fixture.'/Product.json';
+
         $schema = json_decode(file_get_contents($path), true);
 
         $schema['properties']['name']['description'] = 'Some name description';

@@ -53,6 +53,7 @@ final class JsonSchemaValidator extends ConstraintValidator
         $refl = new \ReflectionClass($class);
         $directory = explode('\\', $refl->getName());
         $name = array_pop($directory);
+
         $schema = sprintf(
             'file://%s/%s/%s.json',
             $this->jsonSchemasPath,
@@ -75,6 +76,10 @@ final class JsonSchemaValidator extends ConstraintValidator
             return implode(', ', $v);
         }
 
+        if (is_object($v) && $this->accessor->isReadable($v, 'id')) {
+            return (string) $this->accessor->getValue($v, 'id');
+        }
+
         return (string) $v;
     }
 
@@ -84,6 +89,11 @@ final class JsonSchemaValidator extends ConstraintValidator
     public function validate($class, Constraint $constraint)
     {
         $schema = $constraint->schema;
+
+        //@TODO
+        if($class instanceof \Doctrine\Common\Persistence\Proxy) {
+            return;
+        }
 
         if ($schema === null) {
             $schema = $this->getSchemaForClass($class);
@@ -97,8 +107,14 @@ final class JsonSchemaValidator extends ConstraintValidator
 
         if (!$valid) {
             foreach ($this->validator->getErrors() as $error) {
+                if ($error->getConstraint() == 'required') {
+                    $expected = $error->getProperty();
+                } else {
+                    $expected = $schema->properties->{$error->getProperty()}->{$error->getConstraint()} ;
+                }
+
                 $parameters = [
-                    'expected' => $schema->properties->{$error->getProperty()}->{$error->getConstraint()},
+                    'expected' => $expected,
                     'invalid' => $this->accessor->getValue($class, $error->getProperty()),
                 ];
 
@@ -117,3 +133,4 @@ final class JsonSchemaValidator extends ConstraintValidator
         }
     }
 }
+

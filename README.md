@@ -131,7 +131,7 @@ Keys are the constraint code, for example with `minLength`:
 
 ## Hack
 
-If you want to handle jsonSchema validation yourself, but have issues using Entity instances with `justinrainbow/json-schema`, you may want to take a look at the `PropertyAccessorConstraint`. Here, it'll override the `ObjectConstraint` so that object properties are accessed through the PropertyAccessor. [See the Validator class](https://github.com/soyuka/JsonSchemaBundle/blob/master/src/Mapping/Validator/Validator.php#L16).
+If you want to handle JsonSchema validation yourself, but have issues using Entity instances with `justinrainbow/json-schema`, you may want to take a look at the `PropertyAccessorConstraint`. Here, it'll override the `ObjectConstraint` so that object properties are accessed through the PropertyAccessor. [See the Validator class](https://github.com/soyuka/JsonSchemaBundle/blob/master/src/Mapping/Validator/Validator.php#L16).
 
 ## Licence
 

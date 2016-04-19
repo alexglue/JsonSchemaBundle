@@ -13,6 +13,7 @@ class Validator extends BaseValidator
         parent::__construct();
 
         $this->getFactory()
-            ->setConstraintClass('object', 'Soyuka\JsonSchemaBundle\Mapping\Constraints\PropertyAccessorConstraint');
+            ->setConstraintClass('object', 'Soyuka\JsonSchemaBundle\Mapping\Constraints\PropertyAccessorConstraint')
+            ->setConstraintClass('undefined', 'Soyuka\JsonSchemaBundle\Mapping\Constraints\ProxyUndefinedConstraint');
     }
 }

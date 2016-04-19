@@ -3,9 +3,11 @@
 namespace Soyuka\JsonSchemaBundle\Tests\Fixtures\TestBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Soyuka\JsonSchemaBundle\Constraints as JsonSchemaAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Soyuka\JsonSchemaBundle\Tests\Fixtures\TestBundle\Entity\ProductRepository")
+ * @JsonSchemaAssert\JsonSchema(schema = "validators/product.json")
  */
 class Product
 {
