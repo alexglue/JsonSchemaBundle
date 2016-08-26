@@ -1,29 +1,29 @@
 services:
     json_schema.validator:
-        class: %json_schema.validator.service.class%
-        arguments: [%json_schema.validator.class%]
+        class: '%json_schema.validator.service.class%'
+        arguments: ['%json_schema.validator.class%']
 
     json_schema.uri_resolver:
-        class: %json_schema.uri_resolver.service.class%
-        arguments: [%json_schema.uri_resolver.class%]
+        class: '%json_schema.uri_resolver.service.class%'
+        arguments: ['%json_schema.uri_resolver.class%']
 
     json_schema.uri_retriever:
-        class: %json_schema.uri_retriever.service.class%
-        arguments: [%json_schema.uri_retriever.class%]
+        class: '%json_schema.uri_retriever.service.class%'
+        arguments: ['%json_schema.uri_retriever.class%']
 
     json_schema.validator_constraint:
-        class: Soyuka\JsonSchemaBundle\Constraints\JsonSchemaValidator
+        class:  'Soyuka\JsonSchemaBundle\Constraints\JsonSchemaValidator'
         arguments: ['@json_schema.validator', '@json_schema.uri_retriever', '%json_schema.path%']
-        tags: 
+        tags:
             - {name: validator.constraint_validator, alias: json_schema.constraint_validator}
 
     json_schema.reflection_extractor:
-        class: Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor
+        class: 'Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor'
 
     json_schema.property_info_extractor:
-        class: Symfony\Component\PropertyInfo\PropertyInfoExtractor
+        class: 'Symfony\Component\PropertyInfo\PropertyInfoExtractor'
         arguments: [['@json_schema.reflection_extractor'], ['@json_schema.reflection_extractor'], [], ['@json_schema.reflection_extractor']]
 
     json_schema.php_strategy:
-        class: Soyuka\JsonSchemaBundle\Strategy\PhpStrategy
+        class: 'Soyuka\JsonSchemaBundle\Strategy\PhpStrategy'
         arguments: ['@json_schema.property_info_extractor']
