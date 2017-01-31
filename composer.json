@@ -15,13 +15,13 @@
     ],
     "require": {
         "justinrainbow/json-schema": "<2",
-        "symfony/framework-bundle": "^2.7|^3.0",
-        "symfony/validator": "^2.7|^3.0",
-        "symfony/property-access": "^2.7|^3.0",
-        "symfony/finder": "^2.7|^3.0",
-        "dunglas/php-to-json-schema": "dev-master",
-        "symfony/property-info": "^2.7|^3.0",
-        "symfony/console": "^2.7|^3.0",
+        "soyuka/php-to-json-schema": "~1.0.1",
+        "symfony/framework-bundle": "^3.0",
+        "symfony/validator": "^3.0",
+        "symfony/property-access": "^3.0",
+        "symfony/finder": "^3.0",
+        "symfony/property-info": "^3.0",
+        "symfony/console": "^3.0",
         "psr/cache": "^1.0"
     },
     "require-dev": {
@@ -43,6 +43,5 @@
         "psr-4": {
           "Soyuka\\JsonSchemaBundle\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
