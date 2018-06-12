@@ -26,11 +26,17 @@ class DoctrineMetadataStrategyTest extends \PHPUnit_Framework_TestCase
         'type' => 'object',
         'properties' => [
             'id' => [
-            'type' => ['integer', 'null'],
+                'type' => ['integer', 'null'],
             ],
-            'name' => ['type' => 'string'],
-            'description' => ['type' => 'string'],
-            'price' => ['type' => 'number'],
+            'name' => [
+                'type' => 'string'
+            ],
+            'description' => [
+                'type' => ['string', 'null'],
+            ],
+            'price' => [
+                'type' => ['number', 'null'],
+            ],
         ],
         'required' => ['id', 'name'],
         ]);

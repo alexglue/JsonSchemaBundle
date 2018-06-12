@@ -64,6 +64,10 @@ class DoctrineMetadataStrategy implements StrategyInterface
                 $format = 'time';
             }
 
+            if (in_array($property['type'], ['boolean'])) {
+                $type = 'boolean';
+            }
+
             //Warn
             if ($type === null) {
                 $type = 'string';
@@ -86,7 +90,7 @@ class DoctrineMetadataStrategy implements StrategyInterface
             /*
              * Validating input data, the id might not be present if a resource doesn't exist yet
              */
-            if (isset($property['id'])) {
+            if (isset($property['id']) || ((isset($property['nullable']) && $property['nullable'] === true))) {
                 $prop['type'] = [$prop['type'], 'null'];
             }
 

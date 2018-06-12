@@ -60,7 +60,7 @@ class JsonSchemaExtensionTest extends \PHPUnit_Framework_TestCase
 
         $containerBuilderProphecy->setParameter('json_schema.path', 'test')->shouldBeCalled();
 
-        $containerBuilderProphecy->addResource(Argument::type(ResourceInterface::class))->shouldBeCalled();
+        $containerBuilderProphecy->fileExists(Argument::any())->shouldBeCalled();
 
         $definitions = [
             'json_schema.validator',
