@@ -1,6 +1,7 @@
 {
     "name": "soyuka/json-schema-bundle",
     "type": "symfony-bundle",
+    "version": "1.0.11",
     "description": "Symfony2 tools bundle for Justin Rainbow's json-schema library.",
     "license": "MIT",
     "authors": [
