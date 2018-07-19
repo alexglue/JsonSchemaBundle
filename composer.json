@@ -11,6 +11,10 @@
         {
             "name": "Antoine Bluchet",
             "email": "soyuka@gmail.com"
+        },
+        {
+            "name": "Alexander Sveshnikov",
+            "email": "alexglue@gmail.com"
         }
     ],
     "require": {
@@ -43,5 +47,11 @@
         "psr-4": {
           "Soyuka\\JsonSchemaBundle\\Tests\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.11.x-dev"
+        }
+    },    
 }
